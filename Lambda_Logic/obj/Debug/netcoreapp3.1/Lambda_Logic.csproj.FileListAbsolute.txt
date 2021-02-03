@@ -1,0 +1,13 @@
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\bin\Debug\netcoreapp3.1\Lambda_Logic.deps.json
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\bin\Debug\netcoreapp3.1\Lambda_Logic.dll
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\bin\Debug\netcoreapp3.1\Lambda_Logic.pdb
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.csprojAssemblyReference.cache
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.AssemblyInfoInputs.cache
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.AssemblyInfo.cs
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.csproj.CoreCompileInputs.cache
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.dll
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.pdb
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\bin\Debug\netcoreapp3.1\Lambda_Logic.exe
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\bin\Debug\netcoreapp3.1\Lambda_Logic.runtimeconfig.json
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\bin\Debug\netcoreapp3.1\Lambda_Logic.runtimeconfig.dev.json
+C:\Users\danie\OneDrive\Programming\Lambda_Logic\Lambda_Logic\obj\Debug\netcoreapp3.1\Lambda_Logic.genruntimeconfig.cache
