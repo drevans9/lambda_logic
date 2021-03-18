@@ -7,17 +7,22 @@ namespace Lambda_Logic.Structure
 {
     public class Abstraction : IExpression
     {
+        public string typeOfTerm { get; set; }
+
         public char val1;
 
         public IExpression val2;
         public List<State> states { get; set; }
 
+        //Constructor
         public Abstraction(char c, IExpression e)
         {
             this.val1 = c;
             this.val2 = e;
+            this.typeOfTerm = "Abstraction";
         }
 
+        //Prints all expressions within this lambda abstraction
         public void Print()
         {
             Console.Write("(\\" + val1 + ".");
@@ -25,6 +30,7 @@ namespace Lambda_Logic.Structure
             Console.Write(")");
         }
 
+        //Prints the contents of a closure list 
         public void PrintList(List<Closure> list)
         {
 
@@ -51,17 +57,19 @@ namespace Lambda_Logic.Structure
             }
         }
 
-        public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, Dictionary<char,int> varTracker, List<State> states)
+        //Evaluates this lambda expression by recursively evaluating each sub expression
+        public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, List<State> states)
         {
+            //Copies the environment and stack and adds them to this term's state
             var enviroCopy = new List<Closure>();
             var stackCopy = new List<Closure>();
             if (enviro.Count > 0)
             {
-                enviroCopy = enviro.ConvertAll(c => new Closure { expression = c.expression, environment = c.environment });
+                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
             }
             if (stack.Count > 0)
             {
-                stackCopy = stack.ConvertAll(c => new Closure { expression = c.expression, environment = c.environment });
+                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
             }
 
             var state = new State { expression = this, environment = enviroCopy, stack = stackCopy };
@@ -69,38 +77,22 @@ namespace Lambda_Logic.Structure
             this.states = states;
 
 
-            //This needs to be changed so that if it's the top level it continues to evaluate
+            
             if (enviro.Count != 0 || stack.Count != 0)
-            {
-
-                //Increment all variables
-                varTracker.Keys.ToList().ForEach(x => varTracker[x]++);
-
-                //If the variable exists set to 0, otherwise add it
-                if (varTracker.ContainsKey(val1))
-                {
-                    //Unsure about this
-                    varTracker[val1] = 0;
-                }
-                else
-                {
-                    varTracker.Add(val1, 0);
-                }
+            {              
 
                 if (stack.Count > 0)
                 {
                     //Takes the top element of stack
                     var closure = stack[stack.Count - 1];
+                    closure.variable = this.val1;
 
                     //Removes the top element of stack
                     stack.RemoveAt(stack.Count - 1);
                     enviro.Add(closure);
+                }               
 
-                }
-
-               
-
-                return val2.Evaluate(enviro, stack, varTracker, states);
+                return val2.Evaluate(enviro, stack, states);
 
             }
             else

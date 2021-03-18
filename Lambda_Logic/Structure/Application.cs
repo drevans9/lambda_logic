@@ -7,28 +7,33 @@ namespace Lambda_Logic.Structure
 
     public class Application : IExpression
     {
+        public string typeOfTerm { get; set; }
+
         public IExpression val1;
 
         public IExpression val2;
 
         public List<State> states { get; set; }
 
+        //Constructor
         public Application(IExpression e1, IExpression e2)
-        {
+        {           
             this.val1 = e1;
             this.val2 = e2;
+            this.typeOfTerm = "Application";
         }
 
+        //Prints all expressions within this lambda application
         public void Print()
         {
             val1.Print();
             val2.Print();
         }
 
-
+        //Prints the contents of a closure list 
         public void PrintList(List<Closure> list)
         {
-
+            //If empty list, print []
             if (list.Count == 0)
             {
                 Console.Write("[]");
@@ -53,34 +58,34 @@ namespace Lambda_Logic.Structure
         }
 
 
-
-
-        public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, Dictionary<char, int> varTracker, List<State> states)
+        //Evaluates this lambda expression by recursively evaluating each sub expression
+        public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, List<State> states)
         {
+            
+            //Copies the environment and stack and adds them to this term's state
             var enviroCopy = new List<Closure>();
             var stackCopy = new List<Closure>();
             if (enviro.Count > 0)
             {
-                enviroCopy = enviro.ConvertAll(c => new Closure {expression = c.expression, environment = c.environment });
+                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
             }
             if (stack.Count > 0)
             {
-                stackCopy = stack.ConvertAll(c => new Closure { expression = c.expression, environment = c.environment });
+                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
             }
 
             var state = new State { expression = this, environment = enviroCopy, stack = stackCopy };
             states.Add(state);
             this.states = states;
 
-
             //Creates a clone of enviro so that it uses ByVal instead of ByRef
-            var newEnviro = enviro.ConvertAll(c => new Closure { expression = c.expression, environment = c.environment });
+            var newEnviro = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
 
             var closure = new Closure { expression = val2, environment = newEnviro };            
             stack.Add(closure);
             
 
-            return val1.Evaluate(enviro, stack, varTracker, states);
+            return val1.Evaluate(enviro, stack, states);
         }
 
 
