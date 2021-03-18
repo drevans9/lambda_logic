@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "z7UKV7CGjQP0sqY+gToB3XanINH+JSHTrOAU3qsSqtT4Uj3xCvusomPRC0hfeElHZfRrajXnTTAMR4c0sqOI+A==",
+  "dgSpecHash": "ckbMSe2oGT0QwsRJvGwqpvX3E98/ek/3+vWFEBJx/towekSx85I84DPMO1r6TaOrRf7uoSUMRXx/ezwEnSd+tw==",
   "success": true,
   "projectFilePath": "C:\\Users\\danie\\OneDrive\\Programming\\Lambda_Logic\\Lambda_Logic\\Lambda_Logic.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\danie\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
