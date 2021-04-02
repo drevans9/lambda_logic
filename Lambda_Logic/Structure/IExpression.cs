@@ -11,5 +11,7 @@ namespace Lambda_Logic.Structure
         public void Print();
         public void PrintList(List<Closure> list);
         public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, List<State> states);
+
+        public IExpression DeepCopy();
     }
 }

@@ -22,6 +22,14 @@ namespace Lambda_Logic.Structure
             this.typeOfTerm = "Abstraction";
         }
 
+        public IExpression DeepCopy()
+        {
+            Abstraction other = (Abstraction)this.MemberwiseClone();
+            other.val1 = val1;
+            other.val2 = val2.DeepCopy();
+            return other;
+        }
+
         //Prints all expressions within this lambda abstraction
         public void Print()
         {
@@ -60,19 +68,21 @@ namespace Lambda_Logic.Structure
         //Evaluates this lambda expression by recursively evaluating each sub expression
         public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, List<State> states)
         {
-            //Copies the environment and stack and adds them to this term's state
+            //Copies the environment, stack and expression and adds them to this term's state
             var enviroCopy = new List<Closure>();
             var stackCopy = new List<Closure>();
+            var expressionCopy = this.DeepCopy();           
+           
             if (enviro.Count > 0)
             {
-                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
+                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
             }
             if (stack.Count > 0)
             {
-                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
+                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
             }
 
-            var state = new State { expression = this, environment = enviroCopy, stack = stackCopy };
+            var state = new State { expression = expressionCopy, environment = enviroCopy, stack = stackCopy };
             states.Add(state);
             this.states = states;
 

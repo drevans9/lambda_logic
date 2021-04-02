@@ -17,6 +17,12 @@ namespace Lambda_Logic.Structure
             this.val = c;
             this.typeOfTerm = "Variable";
         }
+        public IExpression DeepCopy()
+        {
+            Variable other = (Variable)this.MemberwiseClone();
+            other.val = val;
+            return other;
+        }
 
         //Prints all expressions within this lambda variable
         public void Print()
@@ -54,16 +60,18 @@ namespace Lambda_Logic.Structure
         //Evaluates this lambda expression by recursively evaluating each sub expression
         public IExpression Evaluate(List<Closure> enviro, List<Closure> stack, List<State> states)
         {
-            //Copies the environment and stack and adds them to this term's state
+            //Copies the environment, stack and expression and adds them to this term's state
             var enviroCopy = new List<Closure>();
             var stackCopy = new List<Closure>();
+            var expressionCopy = this.DeepCopy();
+
             if (enviro.Count > 0)
             {
-                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
+                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
             }
             if (stack.Count > 0)
             {
-                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression, environment = c.environment });
+                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
             }
 
             var state = new State { expression = this, environment = enviroCopy, stack = stackCopy };
