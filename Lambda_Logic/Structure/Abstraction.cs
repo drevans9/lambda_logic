@@ -30,6 +30,18 @@ namespace Lambda_Logic.Structure
             return other;
         }
 
+        public List<Closure> DeepCopyList(List<Closure> list)
+        {
+            //Base case - if list is empty
+            if (list.Count() == 0)
+            {
+                return list;
+            }
+
+            var other = list.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = DeepCopyList(c.environment) });
+            return other;
+        }
+
         //Prints all expressions within this lambda abstraction
         public void Print()
         {
@@ -73,13 +85,14 @@ namespace Lambda_Logic.Structure
             var stackCopy = new List<Closure>();
             var expressionCopy = this.DeepCopy();           
            
+            //Copy environment provided it has elements inside
             if (enviro.Count > 0)
             {
-                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
+                enviroCopy = this.DeepCopyList(enviro);
             }
             if (stack.Count > 0)
-            {
-                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
+            {     
+                stackCopy = this.DeepCopyList(stack);
             }
 
             var state = new State { expression = expressionCopy, environment = enviroCopy, stack = stackCopy };
@@ -88,7 +101,7 @@ namespace Lambda_Logic.Structure
 
 
             
-            if (enviro.Count != 0 || stack.Count != 0)
+            if (stack.Count != 0)
             {              
 
                 if (stack.Count > 0)

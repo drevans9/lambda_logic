@@ -80,21 +80,23 @@ namespace Lambda_Logic
             var K = new Krivine();
 
             var var1 = new Variable('X');
-            var var2 = new Variable('X');
+            var var2 = new Variable('Y');
             var var3 = new Variable('X');
             var var4 = new Variable('X');
+            var var5 = new Variable('X');
 
-            var app1 = new Application(var3, var4);
+            var app1 = new Application(var1, var2);
+            var app2 = new Application(var4, var5);
 
+            var abs1 = new Abstraction('Y',app1);
+            var abs2 = new Abstraction('X', abs1);
+            var abs3 = new Abstraction('X', var3);
+            var abs4 = new Abstraction('X', app2);
 
-            var abs1 = new Abstraction('X',var1);
-            var abs2 = new Abstraction('X', var2);
-            var abs3 = new Abstraction('X', app1);            
+            var app5 = new Application(abs2, abs3);
+            var app6 = new Application(app5, abs4);
 
-            var app2 = new Application(abs2, abs3);
-            var app3 = new Application(abs1, app2);
-
-            var output = K.Reduce(app3);
+            var output = K.Reduce(app6);
 
             K.print(output);
         }

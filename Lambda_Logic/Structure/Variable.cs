@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Lambda_Logic.Structure
@@ -21,6 +22,18 @@ namespace Lambda_Logic.Structure
         {
             Variable other = (Variable)this.MemberwiseClone();
             other.val = val;
+            return other;
+        }
+
+        public List<Closure> DeepCopyList(List<Closure> list)
+        {
+            //Base case - if list is empty
+            if (list.Count() == 0)
+            {
+                return list;
+            }
+
+            var other = list.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = DeepCopyList(c.environment) });
             return other;
         }
 
@@ -67,14 +80,17 @@ namespace Lambda_Logic.Structure
 
             if (enviro.Count > 0)
             {
-                enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
+                enviroCopy = this.DeepCopyList(enviro);
+                //enviroCopy = enviro.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
             }
             if (stack.Count > 0)
             {
-                stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
+                stackCopy = this.DeepCopyList(stack);
+                //stackCopy = stack.ConvertAll(c => new Closure { variable = c.variable, expression = c.expression.DeepCopy(), environment = c.environment });
+
             }
 
-            var state = new State { expression = this, environment = enviroCopy, stack = stackCopy };
+            var state = new State { expression = expressionCopy, environment = enviroCopy, stack = stackCopy };
             states.Add(state);
             this.states = states;
 
